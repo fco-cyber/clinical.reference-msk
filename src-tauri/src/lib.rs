@@ -11,7 +11,7 @@ pub fn run() {
       }
       Ok(())
     })
-    .invoke_handler(tauri::generate_handler![print_document, reprint])
+    .invoke_handler(tauri::generate_handler![print_document, close_print_window])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
@@ -65,11 +65,12 @@ fn print_document(app: tauri::AppHandle, html: String) -> Result<(), String> {
   Ok(())
 }
 
-/// Re-opens the print dialog for whichever window invoked this command.
+/// Closes whichever window invoked this command.
 ///
-/// Used by the "Print / Save as PDF" button inside the print window, so it
-/// works even though the macOS WKWebView ignores JavaScript `window.print()`.
+/// The print window calls this once printing finishes (or the user clicks
+/// back to the app), so the print window disposes of itself — the user
+/// never has to close it manually.
 #[tauri::command]
-fn reprint(window: tauri::WebviewWindow) {
-  let _ = window.print();
+fn close_print_window(window: tauri::WebviewWindow) {
+  let _ = window.close();
 }
