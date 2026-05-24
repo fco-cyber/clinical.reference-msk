@@ -1,0 +1,12 @@
+{
+  "name": "clinical-reference-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Desktop build tooling (Tauri) for the Clinical Reference app",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}
